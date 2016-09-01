@@ -47,7 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\BallManager.cs" />
      <Compile Include="Assets\CueBall.cs" />
+     <Compile Include="Assets\Mouse.cs" />
      <Compile Include="Assets\NormalBall.cs" />
+     <Compile Include="Assets\PocketController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
