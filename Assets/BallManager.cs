@@ -26,7 +26,7 @@ public class BallManager : MonoBehaviour
     // Time: 1:58
     void EndGame()
     {
-
+        // TODO: Implement
     }
 
     // Created: River
@@ -87,11 +87,6 @@ public class BallManager : MonoBehaviour
         if (m_gameobjectarrayBalls.Length == 0)
         {
             EndGame();
-        }
-        else
-        {
-            // TODO: Remove
-            RemoveBall(m_gameobjectarrayBalls[0]);
         }
     }
 }
