@@ -19,10 +19,17 @@ public class CueBall : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    // Created: Vince
+    // Date: 9/1/2016
+    // Time: 7:45pm
+    /// <summary>
+    /// Flicks ball across the table based on user input(click drag || touch and drag)
+    /// </summary>
     void Update()
     {
         Vector3 mouseDist = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        //selected = false;
+
         if (Input.GetMouseButton(0))
         {
 
@@ -37,7 +44,7 @@ public class CueBall : MonoBehaviour
         else
         if (Input.GetMouseButtonUp(0))
         {
-            m_rigidBody.AddForce(m_force * mouseDist.magnitude * 50 * Time.deltaTime, ForceMode2D.Impulse);
+            m_rigidBody.AddForce(m_force * mouseDist.magnitude * -100 * Time.deltaTime, ForceMode2D.Impulse);
             m_vertices[0] = Vector3.zero;
             m_vertices[1] = Vector3.zero;
         }
@@ -45,6 +52,6 @@ public class CueBall : MonoBehaviour
         m_vertices[1].z = 0;
         m_lineRenderer.SetPositions(m_vertices);
 
-        m_rigidBody.velocity *= 0.995f;//friction decay
+        m_rigidBody.velocity *= 0.99f;//friction decay
     }
 }
