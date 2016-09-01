@@ -58,11 +58,14 @@ public class BallManager : MonoBehaviour
         GameObject[] gameobjectarrayTemp = new GameObject[m_gameobjectarrayBalls.Length - 1];
 
         int j = 0;
-        for (int i = 0; i < m_gameobjectarrayBalls.Length; ++i)
+        for (int i = 0; i < m_gameobjectarrayBalls.Length - 1; ++i)
         {
-            if (m_gameobjectarrayBalls[j] == null)
+            if (j < m_gameobjectarrayBalls.Length)
             {
-                ++j;
+                if (m_gameobjectarrayBalls[j] == null)
+                {
+                    ++j;
+                }
             }
 
             gameobjectarrayTemp[i] = m_gameobjectarrayBalls[j];
