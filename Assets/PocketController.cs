@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 enum e_ballType
@@ -11,6 +12,9 @@ enum e_ballType
 
 public class PocketController : MonoBehaviour
 {
+    GameObject obj;
+    Timer tmr;
+
     [SerializeField]
     e_ballType m_enumBallType;
 
@@ -36,7 +40,17 @@ public class PocketController : MonoBehaviour
     void EightBallGameOver()
     {
         // TODO: Implement eightball gameover
-        Debug.Log("8 Ball Gameover");
+        //end condition 1
+
+        if(tmr != null)
+        {
+            
+            tmr.m_currTime = 180;
+            tmr.Save();
+        }
+       
+        SceneManager.LoadScene("Game Over Screen");
+
     }
 
     // Created: River
@@ -47,6 +61,12 @@ public class PocketController : MonoBehaviour
     /// </summary>
     void CuePenalty()
     {
+        if (tmr != null)
+        {
+            tmr.m_currTime += 10;
+
+        }
+
         Debug.Log("Cue Penalty");
         // TODO: Implement cue penalty
     }
@@ -68,6 +88,17 @@ public class PocketController : MonoBehaviour
     // Time: 3:40
     void Start()
     {
+
+
+        obj = GameObject.FindGameObjectWithTag("Timer");
+
+        if (obj != null)
+        {
+            tmr = obj.GetComponent<Timer>();
+
+
+        }
+
         GameObject temp = GameObject.FindGameObjectWithTag("GameController");
 
         if (temp != null)

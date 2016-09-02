@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 public class BallManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] m_gameobjectarrayBalls = null;
+    public GameObject[] m_gameobjectarrayBalls = null;
 
     // Created: River
-    // Date: 9/1/2016
-    // Time: 2:26
+    // Date: 1/9/2016
+    // Time: 2:26pm
     /// <summary>
     /// Returns a list of all the balls in the ball list
     /// </summary>
@@ -22,16 +22,35 @@ public class BallManager : MonoBehaviour
     }
 
     // Created: River
-    // Date: 9/1/2016
+    // Date: 1/9/2016
     // Time: 1:58
+    // Modified: River
+    // Date: 2/9/2016
+    // Time: 10:04am
     void EndGame()
     {
-        // TODO: Implement
+        //Save
+        GameObject obj = GameObject.FindGameObjectWithTag("Timer");
+
+        if (obj != null)
+        {
+            Timer tmr = obj.GetComponent<Timer>();
+
+            if (tmr != null)
+            {
+                tmr.Save();
+            }
+        }
+        SceneManager.LoadScene("Game Over Screen");
     }
 
     // Created: River
-    // Date: 9/1/2016
-    // Time: 2:04
+    // Date: 2/9/2016
+    // Time: 11:07am
+
+    // Created: River
+    // Date: 1/9/2016
+    // Time: 2:04pm
     /// <summary>
     /// Removes the ball from the registered ball list
     /// </summary>
@@ -81,12 +100,12 @@ public class BallManager : MonoBehaviour
     // Update is called once per frame
     // Created: River
     // Date: 9/1/2016
-    // Time: 1:56
+    // Time: 1:56pm
     void Update()
     {
         if (m_gameobjectarrayBalls.Length == 0)
         {
-            EndGame();
+            EndGame();//end condition
         }
     }
 }

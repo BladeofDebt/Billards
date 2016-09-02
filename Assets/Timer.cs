@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System.IO;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Timer : MonoBehaviour
@@ -10,12 +12,25 @@ public class Timer : MonoBehaviour
     public bool a_blackBallFault;
     public float m_bestTime;
     public float m_currTime;
+    private float m_runTime;
+
     // Use this for initialization
     void Start()
     {
-        m_bestTime = -1;
+        m_runTime = Time.realtimeSinceStartup;
+        try
+        {
+            BinaryReader read = new BinaryReader(File.Open(Application.persistentDataPath + "/Time.bin", FileMode.Open));
+            m_bestTime = read.ReadSingle();
+            read.Close();
+        }
+        catch (System.Exception excep)
+        {
+            m_bestTime = -1;
+        }
         a_allBallsPocketed = false;
         m_time = GetComponent<Text>();
+        m_currTime = 0.0f;
     }
 
     // Update is called once per frame
@@ -28,42 +43,50 @@ public class Timer : MonoBehaviour
     /// </summary>
     void Update()
     {
-        m_time.text = "Time:    " + ((Time.realtimeSinceStartup)).ToString();
+        m_currTime += Time.deltaTime;
+        m_time.text = "Time: " + (m_currTime).ToString();
 
-        if (Time.realtimeSinceStartup >= m_timeMax)
+        if (m_currTime > m_timeMax)
         {
-            //TODO
-            //GAME OVER
-
-
+            //you suck
+            Save();
+            SceneManager.LoadScene("Game Over Screen");
         }
-        else if (a_allBallsPocketed)
+
+    }
+
+
+    public void Save()
+    {
+
+
+        //if no best time of new best time
+        if (m_bestTime == -1 || m_bestTime > m_currTime)
         {
-            if (Time.realtimeSinceStartup < m_bestTime || m_bestTime == -1)
-            {
+            m_bestTime = m_currTime;
+        }
+
+        try
+        {
+            BinaryWriter writer = new BinaryWriter(File.Open(Application.persistentDataPath + "/Time.bin", FileMode.OpenOrCreate, FileAccess.Write));
+
+
+
+            //GameObject m_gameCont = GameObject.FindGameObjectWithTag("GameController");
+            //if (m_gameCont.GetComponent<BallManager>().m_gameobjectarrayBalls.Length == 0)
+            //{
                 
-                m_bestTime = Time.realtimeSinceStartup;//update best time
-                m_currTime = m_bestTime;
-                //record broken!
-                //TODO
-                //show current time
-                //Game Over
-            }
-            else//if not best time
-            {
-                //TODO
-                //game over, show current time and best time
-                m_currTime = Time.realtimeSinceStartup;
+            //}
+            writer.Write(m_bestTime);
+            writer.Write(m_currTime);
+            
 
-            }
+
+            writer.Close();
         }
-        else if (a_blackBallFault)//if black ball is not pocketed last
+        catch (System.Exception excep)
         {
-            //TODO
-            //game over
-            //current time is m_timeMax
-            m_currTime = m_timeMax;
-            //display best time
+            Debug.LogWarning(excep.ToString());
         }
 
 

@@ -38,13 +38,13 @@ public class CueBall : MonoBehaviour
             m_force.z = 0;
             Ray a = new Ray(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             Debug.DrawLine(a.origin, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            m_vertices[0] = transform.position;
+            m_vertices[0] = transform.position + m_force.normalized*10;
             m_vertices[1] = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
         else
         if (Input.GetMouseButtonUp(0))
         {
-            m_rigidBody.AddForce(m_force * mouseDist.magnitude * -100 * Time.deltaTime, ForceMode2D.Impulse);
+            m_rigidBody.AddForce(m_force * mouseDist.magnitude * 100 * Time.deltaTime, ForceMode2D.Impulse);
             m_vertices[0] = Vector3.zero;
             m_vertices[1] = Vector3.zero;
         }
